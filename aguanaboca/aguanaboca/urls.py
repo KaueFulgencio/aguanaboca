@@ -21,13 +21,14 @@ from django.conf.urls.static import static
 
 from django.contrib import admin
 from django.urls import path, include
-from projeto_aguanaboca.views import lista_produtos, adiciona_produto
+from projeto_aguanaboca.views import lista_produtos, adiciona_produto, adiciona_categoria
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('produtos/', lista_produtos, name='lista_produtos'),
     path('produtos/adicionar/', adiciona_produto, name='adiciona_produto'),
     path('', lista_produtos, name='raiz'),  
+    path('categorias/adicionar/', adiciona_categoria, name='adiciona_categoria'),
 ]
 
 if settings.DEBUG:
