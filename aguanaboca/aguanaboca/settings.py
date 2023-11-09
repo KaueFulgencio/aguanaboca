@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'projeto_aguanaboca',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

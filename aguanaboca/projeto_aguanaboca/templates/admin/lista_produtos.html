@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Produtos</title>
+</head>
+<body>
+    <h1>Lista de Produtos</h1>
+    <ul>
+        {% for produto in produtos %}
+            <li>{{ produto.nome }} - {{ produto.preco }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'adiciona_produto' %}">Adicionar Produto</a>
+</body>
+</html>

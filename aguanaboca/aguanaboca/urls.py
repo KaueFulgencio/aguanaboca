@@ -16,7 +16,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
+from django.contrib import admin
+from django.urls import path, include
+from projeto_aguanaboca.views import lista_produtos, adiciona_produto
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('produtos/', lista_produtos, name='lista_produtos'),
+    path('produtos/adicionar/', adiciona_produto, name='adiciona_produto'),
+    path('', lista_produtos, name='raiz'),  
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
