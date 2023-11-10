@@ -1,15 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Adicionar Categoria</title>
-</head>
-<body>
-    <h1>Adicionar Categoria</h1>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Adicionar Categoria</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Adicionar Categoria</title>
+    </head>
+    <body>
+        <h1>Adicionar Categoria</h1>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Adicionar Categoria</button>
+        </form>
+    </body>
+    </html>
+{% endblock %}
