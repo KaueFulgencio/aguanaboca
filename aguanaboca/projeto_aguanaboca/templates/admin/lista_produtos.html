@@ -6,12 +6,18 @@
 </head>
 <body>
     <h1>Lista de Produtos</h1>
-    <ul>
-        {% for produto in produtos %}
-            <li>{{ produto.nome }} - {{ produto.preco }}</li>
-        {% endfor %}
-    </ul>
-    <a href="{% url 'adiciona_produto' %}">Adicionar Produto</a>
-    <a href="{% url 'adiciona_categoria' %}">Adicionar Categoria</a>
+    {% for produto in produtos %}
+        <div>
+            <h2>{{ produto.nome }}</h2>
+            <p>Preço: R$ {{ produto.preco }}</p>
+            {% if produto.imagem %}
+                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }} Image" style="max-width: 200px; max-height: 200px;">
+            {% endif %}
+        </div>
+        <hr>
+    {% endfor %}
 </body>
 </html>
+
+<a href="{% url 'adiciona_produto' %}">Adicionar Produto</a>
+    <a href="{% url 'adiciona_categoria' %}">Adicionar Categoria</a>
