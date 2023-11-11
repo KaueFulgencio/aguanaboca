@@ -1,8 +1,6 @@
 from django.shortcuts import get_object_or_404, render, redirect
-
-# Create your views here.
-
-from .models import Categoria, Produto
+#from django.contrib.auth.decorators import login_required  
+from .models import Categoria, Produto, RegistroAtividade
 from .forms import ProdutoForm, CategoriaForm
 
 def lista_produtos(request):
@@ -20,6 +18,8 @@ def lista_produtos(request):
         produtos = produtos.filter(preco__lte=preco_maximo)
 
     categorias = Categoria.objects.all()
+    
+    historico = RegistroAtividade.objects.all()  
 
     return render(request, 'admin/lista_produtos.html', {
         'produtos': produtos,
@@ -27,13 +27,23 @@ def lista_produtos(request):
         'categorias': categorias,
         'categoria_selecionada': int(categoria_id) if categoria_id else None,
         'preco_maximo': preco_maximo,
+        'historico': historico, 
     })
+
 
 def adiciona_produto(request):
     if request.method == 'POST':
         form = ProdutoForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            produto = form.save()
+
+            RegistroAtividade.objects.create(
+                acao='adicao',
+                usuario=request.user,
+                item_id=produto.id,
+                tipo_item='Produto',
+            )
+
             return redirect('lista_produtos')
     else:
         form = ProdutoForm()
@@ -45,7 +55,7 @@ def adiciona_categoria(request):
         form = CategoriaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('lista_produtos')  
+            return redirect('lista_produtos')
     else:
         form = CategoriaForm()
 
@@ -58,6 +68,12 @@ def edita_produto(request, produto_id):
         form = ProdutoForm(request.POST, request.FILES, instance=produto)
         if form.is_valid():
             form.save()
+            RegistroAtividade.objects.create(
+                acao='edicao',
+                usuario=request.user,
+                item_id=produto.id,
+                tipo_item='Produto',
+            )
             return redirect('lista_produtos')
     else:
         form = ProdutoForm(instance=produto)
@@ -69,6 +85,16 @@ def remove_produto(request, produto_id):
 
     if request.method == 'POST':
         produto.delete()
+        RegistroAtividade.objects.create(
+            acao='remocao',
+            usuario=request.user,
+            item_id=produto.id,
+            tipo_item='Produto',
+        )
         return redirect('lista_produtos')
 
     return render(request, 'admin/confirma_remove_produto.html', {'produto': produto})
+
+def historico_atividades(request):
+    logs = RegistroAtividade.objects.all()
+    return render(request, 'historico_atividades.html', {'logs': logs})

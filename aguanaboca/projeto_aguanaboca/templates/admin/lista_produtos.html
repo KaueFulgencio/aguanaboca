@@ -155,6 +155,13 @@
     {% else %}
         <p>Nenhum produto encontrado.</p>
     {% endif %}
+    
+    <h2>Histórico de Atividades</h2>
+    <ul>
+        {% for log in historico %}
+            <li>{{ log }}</li>
+        {% endfor %}
+    </ul>
 
     <a class="adicionar-link" href="{% url 'adiciona_produto' %}">Adicionar Produto</a>
     <a class="adicionar-link" href="{% url 'adiciona_categoria' %}">Adicionar Categoria</a>

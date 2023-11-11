@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Histórico de Atividades</h1>
+
+    {% if logs %}
+        <ul>
+            {% for log in logs %}
+                <li>
+                    {{ log.acao }} em {{ log.data | date:"d/m/Y H:i:s" }} por {{ log.usuario.username }}
+                    {% if log.tipo_item == 'Produto' %}
+                        do Produto {{ log.item_id }}
+                    {% elif log.tipo_item == 'Categoria' %}
+                        da Categoria {{ log.item_id }}
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum registro de atividade encontrado.</p>
+    {% endif %}
+{% endblock %}
