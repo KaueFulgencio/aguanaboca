@@ -6,8 +6,9 @@ from .models import Produto
 from .forms import ProdutoForm, CategoriaForm
 
 def lista_produtos(request):
+    termo_de_pesquisa = request.GET.get('q', '')
     produtos = Produto.objects.all()
-    return render(request, 'admin/lista_produtos.html', {'produtos': produtos})
+    return render(request, 'admin/lista_produtos.html', {'produtos': produtos, 'termo_de_pesquisa': termo_de_pesquisa})
 
 def adiciona_produto(request):
     if request.method == 'POST':

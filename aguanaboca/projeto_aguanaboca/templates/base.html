@@ -5,16 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Aguanaboca{% endblock %}</title>
     <style>
+        body {
+            margin: 0; 
+        }
+
         nav {
             background-color: #3498db;
             padding: 10px;
             text-align: center;
+            margin: 0; 
         }
 
         nav a {
             color: white;
             text-decoration: none;
             margin: 0 10px;
+        }
+
+        nav img {
+            max-height: 40px;
+            margin-right: 10px;
+            margin-left: 10px; 
         }
 
         main {
@@ -26,14 +37,17 @@
             color: white;
             text-align: center;
             padding: 10px;
-            position: fixed;
+            position: relative;
             bottom: 0;
             width: 100%;
+            margin: 0; 
         }
     </style>
 </head>
 <body>
     <nav>
+        <img src="https://cdn-icons-png.flaticon.com/512/3448/3448609.png" alt="Logo do restaurante">
+        <a href="{% url 'lista_produtos' %}">Lista de Produtos</a>
         <a href="{% url 'adiciona_produto' %}">Adicionar Produto</a>
         <a href="{% url 'adiciona_categoria' %}">Adicionar Categoria</a>
     </nav>

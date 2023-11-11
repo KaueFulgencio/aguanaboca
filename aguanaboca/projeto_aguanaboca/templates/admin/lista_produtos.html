@@ -1,17 +1,122 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+    <style>
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .produto {
+            display: flex;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+
+        .descricao {
+            flex: 1;
+            margin-right: 20px;
+        }
+
+        img {
+            max-width: 200px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        hr {
+            border: 1px solid #eee;
+            margin: 20px 0;
+        }
+
+        .adicionar-link {
+            display: block;
+            background-color: #28a745;
+            color: #fff;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-size: 16px;
+        }
+
+        .adicionar-link:hover {
+            background-color: #218838;
+        }
+
+        .search-form {
+            margin-bottom: 20px;
+        }
+
+        .search-input {
+            padding: 5px;
+            width: 200px;
+        }
+
+        .search-button {
+            padding: 5px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+
     <h1>Lista de Produtos</h1>
-    {% for produto in produtos %}
-        <div>
-            <h2>{{ produto.nome }}</h2>
-            <p>Preço: R$ {{ produto.preco }}</p>
-            {% if produto.imagem %}
-                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }} Image" style="max-width: 200px; max-height: 200px;">
+
+    <form class="search-form" method="GET">
+        <input class="search-input" type="text" name="q" placeholder="Buscar por nome" value="{{ request.GET.q }}">
+        <button class="search-button" type="submit">Buscar</button>
+    </form>
+
+    {% if request.GET.q %}
+        {% for produto in produtos %}
+            {% if produto.nome|lower in request.GET.q|lower %}
+                <div class="produto">
+                    <div class="descricao">
+                        <h2>{{ produto.nome }}</h2>
+                        <p>Preço: R$ {{ produto.preco }}</p>
+                        <p>{{ produto.descricao }}</p>
+                    </div>
+                    {% if produto.imagem %}
+                        <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }} Image">
+                    {% endif %}
+                </div>
+                <hr>
             {% endif %}
-        </div>
-        <hr>
-    {% endfor %}
-    <a href="{% url 'adiciona_produto' %}">Adicionar Produto</a>
-    <a href="{% url 'adiciona_categoria' %}">Adicionar Categoria</a>
+        {% endfor %}
+    {% else %}
+        {% for produto in produtos %}
+            <div class="produto">
+                <div class="descricao">
+                    <h2>{{ produto.nome }}</h2>
+                    <p>Preço: R$ {{ produto.preco }}</p>
+                    <p>{{ produto.descricao }}</p>
+                </div>
+                {% if produto.imagem %}
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }} Image">
+                {% endif %}
+            </div>
+            <hr>
+        {% endfor %}
+    {% endif %}
+
+    <a class="adicionar-link" href="{% url 'adiciona_produto' %}">Adicionar Produto</a>
+    <a class="adicionar-link" href="{% url 'adiciona_categoria' %}">Adicionar Categoria</a>
 {% endblock %}
