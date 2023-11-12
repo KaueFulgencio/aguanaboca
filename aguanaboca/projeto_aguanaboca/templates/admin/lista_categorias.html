@@ -16,6 +16,12 @@
 
         li {
             margin-bottom: 10px;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
         }
 
         a {
@@ -27,6 +33,37 @@
         a:hover {
             text-decoration: underline;
         }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .editar-button,
+        .remover-button {
+            padding: 8px 15px;
+            text-align: center;
+            text-decoration: none;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .editar-button {
+            background-color: #007bff;
+        }
+
+        .editar-button:hover {
+            background-color: #0056b3;
+        }
+
+        .remover-button {
+            background-color: #dc3545;
+        }
+
+        .remover-button:hover {
+            background-color: #c82333;
+        }
     </style>
 
     <h1>Lista de Categorias</h1>
@@ -34,7 +71,11 @@
     <ul>
         {% for categoria in categorias %}
             <li>
-                <a href="{% url 'produtos_por_categoria' categoria.id %}">{{ categoria.nome }}</a>
+                <span>{{ categoria.nome }}</span>
+                <div class="actions">
+                    <a class="editar-button" href="{% url 'edita_categoria' categoria.id %}">Editar</a>
+                    <a class="remover-button" href="{% url 'remove_categoria' categoria.id %}">Remover</a>
+                </div>
             </li>
         {% endfor %}
     </ul>

@@ -107,3 +107,25 @@ def produtos_por_categoria(request, categoria_id):
     categoria = Categoria.objects.get(pk=categoria_id)
     produtos = Produto.objects.filter(categoria=categoria)
     return render(request, 'admin/produtos_por_categoria.html', {'categoria': categoria, 'produtos': produtos})
+
+def edita_categoria(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_categorias')
+    else:
+        form = CategoriaForm(instance=categoria)
+
+    return render(request, 'admin/edita_categoria.html', {'form': form, 'categoria': categoria})
+
+def remove_categoria(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+
+    if request.method == 'POST':
+        categoria.delete()
+        return redirect('lista_categorias')
+
+    return render(request, 'admin/confirma_remove_categoria.html', {'categoria': categoria})

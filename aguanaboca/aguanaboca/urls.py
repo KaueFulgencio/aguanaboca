@@ -21,7 +21,7 @@ from django.conf.urls.static import static
 
 from django.contrib import admin
 from django.urls import path, include
-from projeto_aguanaboca.views import edita_produto, lista_categorias, lista_produtos, adiciona_produto, adiciona_categoria, produtos_por_categoria, remove_produto
+from projeto_aguanaboca.views import edita_categoria, edita_produto, lista_categorias, lista_produtos, adiciona_produto, adiciona_categoria, produtos_por_categoria, remove_categoria, remove_produto
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,6 +33,8 @@ urlpatterns = [
     path('remove_produto/<int:produto_id>/', remove_produto, name='remove_produto'),
     path('categorias/', lista_categorias, name="lista_categorias"),
     path('produtos_por_categoria/<int:categoria_id>', produtos_por_categoria, name="produtos_por_categoria"),
+    path('categorias/editar/<int:categoria_id>/', edita_categoria, name='edita_categoria'),
+    path('categorias/remover/<int:categoria_id>/', remove_categoria, name='remove_categoria'),
 ]
 
 if settings.DEBUG:
