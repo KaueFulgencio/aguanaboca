@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+        .produto {
+            display: flex;
+            border: 1px solid #ddd;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #007bff;
+        }
+        p {
+            color: #555;
+            margin-bottom: 10px;
+        }
+    
+        .descricao {
+            flex: 1;
+            margin-right: 20px;
+        }
+    
+        img {
+            max-width: 200px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+    
+        hr {
+            border: 1px solid #eee;
+            margin: 20px 0;
+        }
+        .editar-button,
+        .remover-button {
+        display: inline-block;
+        padding: 8px 15px;
+        margin-top: 10px;
+        margin-right: 10px;
+        margin-left: 10px;
+        text-align: center;
+        text-decoration: none;
+        color: #fff;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .editar-button {
+        background-color: #007bff;
+    }
+
+    .editar-button:hover {
+        background-color: #0056b3;
+    }
+
+    .remover-button {
+        background-color: #dc3545;
+    }
+
+    .remover-button:hover {
+        background-color: #c82333;
+    }
+    </style>
+    
+    <h1>Produtos na Categoria "{{ categoria.nome }}"</h1>
+
+    {% if produtos %}
+        <ul>
+            {% for produto in produtos %}
+            <div class="produto">
+                <div class="descricao">
+                    <h2>{{ produto.nome }}</h2>
+                    <p>Preço: R$ {{ produto.preco }}</p>
+                    <p>{{ produto.descricao }}</p>
+                </div>
+                {% if produto.imagem %}
+                    <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }} Image">
+                {% endif %}
+                <div>
+                    <a class="editar-button" href="{% url 'edita_produto' produto.id %}">Editar</a>
+                    <a class="remover-button" href="{% url 'remove_produto' produto.id %}">Remover</a>
+                </div>
+            </div>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>Nenhum produto encontrado nesta categoria.</p>
+    {% endif %}
+{% endblock %}

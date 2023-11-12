@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <style>
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+
+    <h1>Lista de Categorias</h1>
+
+    <ul>
+        {% for categoria in categorias %}
+            <li>
+                <a href="{% url 'produtos_por_categoria' categoria.id %}">{{ categoria.nome }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

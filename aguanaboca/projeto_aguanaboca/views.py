@@ -98,3 +98,12 @@ def remove_produto(request, produto_id):
 def historico_atividades(request):
     logs = RegistroAtividade.objects.all()
     return render(request, 'historico_atividades.html', {'logs': logs})
+
+def lista_categorias(request):
+    categorias = Categoria.objects.all()
+    return render(request, 'admin/lista_categorias.html', {'categorias': categorias})
+
+def produtos_por_categoria(request, categoria_id):
+    categoria = Categoria.objects.get(pk=categoria_id)
+    produtos = Produto.objects.filter(categoria=categoria)
+    return render(request, 'admin/produtos_por_categoria.html', {'categoria': categoria, 'produtos': produtos})
