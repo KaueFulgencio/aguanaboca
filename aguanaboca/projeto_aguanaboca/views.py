@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 #from django.contrib.auth.decorators import login_required  
+from django.db import IntegrityError, transaction
+from django.contrib import messages
 from .models import Categoria, Produto, RegistroAtividade
 from .forms import ProdutoForm, CategoriaForm
 
@@ -84,13 +86,15 @@ def remove_produto(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
 
     if request.method == 'POST':
-        produto.delete()
-        RegistroAtividade.objects.create(
-            acao='remocao',
-            usuario=request.user,
-            item_id=produto.id,
-            tipo_item='Produto',
-        )
+        with transaction.atomic():
+            RegistroAtividade.objects.create(
+                acao='remocao',
+                usuario=request.user,
+                item_id=produto.id,
+                tipo_item='Produto',
+            )
+            produto.delete()
+
         return redirect('lista_produtos')
 
     return render(request, 'admin/confirma_remove_produto.html', {'produto': produto})
