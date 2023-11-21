@@ -1,5 +1,7 @@
 from django.shortcuts import get_object_or_404, render, redirect
 #from django.contrib.auth.decorators import login_required  
+from django.db import IntegrityError, transaction
+from django.contrib import messages
 from .models import Categoria, Produto, RegistroAtividade
 from .forms import ProdutoForm, CategoriaForm
 
@@ -84,13 +86,15 @@ def remove_produto(request, produto_id):
     produto = get_object_or_404(Produto, id=produto_id)
 
     if request.method == 'POST':
-        produto.delete()
-        RegistroAtividade.objects.create(
-            acao='remocao',
-            usuario=request.user,
-            item_id=produto.id,
-            tipo_item='Produto',
-        )
+        with transaction.atomic():
+            RegistroAtividade.objects.create(
+                acao='remocao',
+                usuario=request.user,
+                item_id=produto.id,
+                tipo_item='Produto',
+            )
+            produto.delete()
+
         return redirect('lista_produtos')
 
     return render(request, 'admin/confirma_remove_produto.html', {'produto': produto})
@@ -98,3 +102,34 @@ def remove_produto(request, produto_id):
 def historico_atividades(request):
     logs = RegistroAtividade.objects.all()
     return render(request, 'historico_atividades.html', {'logs': logs})
+
+def lista_categorias(request):
+    categorias = Categoria.objects.all()
+    return render(request, 'admin/lista_categorias.html', {'categorias': categorias})
+
+def produtos_por_categoria(request, categoria_id):
+    categoria = Categoria.objects.get(pk=categoria_id)
+    produtos = Produto.objects.filter(categoria=categoria)
+    return render(request, 'admin/produtos_por_categoria.html', {'categoria': categoria, 'produtos': produtos})
+
+def edita_categoria(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+
+    if request.method == 'POST':
+        form = CategoriaForm(request.POST, instance=categoria)
+        if form.is_valid():
+            form.save()
+            return redirect('lista_categorias')
+    else:
+        form = CategoriaForm(instance=categoria)
+
+    return render(request, 'admin/edita_categoria.html', {'form': form, 'categoria': categoria})
+
+def remove_categoria(request, categoria_id):
+    categoria = get_object_or_404(Categoria, id=categoria_id)
+
+    if request.method == 'POST':
+        categoria.delete()
+        return redirect('lista_categorias')
+
+    return render(request, 'admin/confirma_remove_categoria.html', {'categoria': categoria})

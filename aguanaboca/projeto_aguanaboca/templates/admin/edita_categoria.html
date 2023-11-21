@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <style>
+<style>
     body {
         background-color: #f8f9fa;
         font-family: 'Helvetica', sans-serif;
@@ -51,17 +51,36 @@
         border-radius: 4px;
         cursor: pointer;
         font-size: 16px;
+        margin-right: 10px;
     }
 
     button:hover {
         background-color: #218838;
     }
-    </style>
 
-    <h1>Editar Produto</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Salvar</button>
-    </form>
+    .cancel-button {
+        background-color: #dc3545;
+        color: #fff;
+        padding: 10px 15px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        text-decoration: none;
+    }
+
+    .cancel-button:hover {
+        background-color: #c82333;
+    }
+</style>
+
+<h1>Editar Categoria</h1>
+
+<form method="post" action="{% url 'edita_categoria' categoria.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Salvar Alterações</button>
+    <a href="{% url 'lista_categorias' %}" class="cancel-button">Cancelar</a>
+</form>
+
 {% endblock %}

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>Confirmação de Remoção</h1>
+    <p>Você tem certeza que deseja remover a categoria "{{ categoria.nome }}"?</p>
+    <form method="post" action="{% url 'remove_categoria' categoria.id %}">
+        {% csrf_token %}
+        <button type="submit">Sim, remover</button>
+    </form>
+    <a href="{% url 'lista_categorias' %}">Cancelar</a>
+{% endblock %}
