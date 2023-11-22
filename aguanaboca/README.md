@@ -16,6 +16,11 @@ O Aguanaboca é um projeto de uma aplicação web para gerenciar um restaurante.
 3. Rode as migrações: `python manage.py migrate`
 4. Inicie o servidor: `python manage.py runserver`
 
+# Usuario 
+python manage.py createsuperuser
+Username: root
+Password: Banana@123!
+
 ## Uso
 - Acesse a aplicação em `http://localhost:8000`
 - Faça login como administrador para acessar as funcionalidades
