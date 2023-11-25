@@ -18,8 +18,8 @@ O Aguanaboca é um projeto de uma aplicação web para gerenciar um restaurante.
 
 # Usuario 
 python manage.py createsuperuser
-Username: root
-Password: Banana@123!
+usuario: root
+senha: Banana@123!
 
 ## Uso
 - Acesse a aplicação em `http://localhost:8000`
@@ -30,6 +30,7 @@ Password: Banana@123!
 - Django
 - HTML, CSS, JavaScript
 
-## Autor
+
+## Autores
 - Kaue Medeiros Fulgencio
 
