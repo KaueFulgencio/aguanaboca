@@ -26,11 +26,14 @@ senha: Banana@123!
 - Faça login como administrador para acessar as funcionalidades
 
 ## Tecnologias Utilizadas
-- Python
-- Django
-- HTML, CSS, JavaScript
+- Django 4.2.4
+- Sqlite
+- GitHub para versionamento
+- HTML
+- Css
+- Javascript
+- Django rest framework
 
-
-## Autores
-- Kaue Medeiros Fulgencio
+## Autor
+- Kaue Medeiros Fulgencio - Desenvolvedor do projeto por completo
 
